@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.conf import settings
+from .utils import get_config
 
 
 def process_login(request):
@@ -15,13 +15,14 @@ def process_login(request):
     :param request: HttpRequest
     """
     code = request.GET.get('code', '')
+    config = get_config()
     json_header = {'content-type': 'application/json'}
-    token_url = 'https://%s/oauth/token' % settings.AUTH0_DOMAIN
+    token_url = 'https://%s/oauth/token' % config['AUTH0_DOMAIN']
 
     token_payload = {
-        'client_id': settings.AUTH0_CLIENT_ID,
-        'client_secret': settings.AUTH0_SECRET,
-        'redirect_uri': reverse(settings.AUTH0_CALLBACK_URL),
+        'client_id': config['AUTH0_CLIENT_ID'],
+        'client_secret': config['AUTH0_SECRET'],
+        'redirect_uri': reverse(config['AUTH0_CALLBACK_URL']),
         'code': code,
         'grant_type': 'authorization_code'
     }
@@ -31,7 +32,7 @@ def process_login(request):
                                headers=json_header).json()
 
     url = 'https://%s/userinfo?access_token=%s'
-    user_url = url % (settings.AUTH0_DOMAIN, token_info.get('access_token', ''))
+    user_url = url % (config['AUTH0_DOMAIN'], token_info.get('access_token', ''))
     user_info = requests.get(user_url).json()
 
     # We're saving all user information into the session
@@ -40,6 +41,6 @@ def process_login(request):
 
     if user:
         login(request, user)
-        return redirect(settings.AUTH0_CALLBACK_URL)
+        return redirect(config['AUTH0_CALLBACK_URL'])
 
     return HttpResponse(status=400)
