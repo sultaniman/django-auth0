@@ -32,7 +32,7 @@ Quickstart
 
 * Include callback urls:
 
-.. code-block::
+.. code-block:: python
 
     urlpatterns = [
         ...
