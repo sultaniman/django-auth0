@@ -4,6 +4,7 @@ from .settings import AUTH0_CALLBACK_URL
 
 
 def get_config():
+    """ Collects AUTH0_* configurations """
     return {
         'AUTH0_CLIENT_ID': settings.AUTH0_CLIENT_ID,
         'AUTH0_SECRET': settings.AUTH0_SECRET,
