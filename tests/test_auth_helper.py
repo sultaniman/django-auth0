@@ -2,33 +2,73 @@
 # -*- coding: utf-8 -*-
 
 """
-test_django-auth0
-------------
-Tests for `django-auth0` models module.
+Tests for `django-auth0` auth_helpers module.
 """
-from django.test import TestCase
+from mock import patch
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
-from django_auth0.auth_backend import Auth0Backend
+from django.contrib.sessions.middleware import SessionMiddleware
+
+from django_auth0 import auth_helpers
+
+
+mock_user = {
+    'username': 'username',
+    'email': 'email@email.com',
+    'access_token': 'access_token'
+}
+
+user = User.objects.create_user(username=mock_user['username'], email=mock_user['email'])
+
+
+class MockObject(object):
+    def json(self):
+        return mock_user
+
+
+def mock_auth(*args, **kwargs):
+    """ Returns creates test user and assigns authentication backend """
+    setattr(user, 'backend', 'django_auth0.auth_backends.Auth0Backend')
+    return user
+
+
+def mock_request(*args, **kwargs):
+    """ Returns mocked object call result for requests.join """
+    return MockObject()
+
+
+def make_request():
+    """ Creates request factory object with session and url params """
+    factory = RequestFactory()
+    url = reverse('auth_callback')
+    request = factory.get('%s/?code=code' % url)
+    middleware = SessionMiddleware()
+    middleware.process_request(request)
+    request.session.save()
+
+    return request
 
 
 class TestDjangoAuth0(TestCase):
-    def setUp(self):
-        self.backend = Auth0Backend()
-        self.auth_data = {
-            'email': 'email@email.com',
-            'username': 'test_username'
-        }
+    """ Test auth helper """
 
-    def test_authenticate_works(self):
-        """ Authenticate works ok """
-        user = self.backend.authenticate(**self.auth_data)
-        self.assertTrue(isinstance(user, User), msg='user is instance of User')
+    @patch('django_auth0.auth_helpers.requests.get', side_effect=mock_request)
+    @patch('django_auth0.auth_helpers.requests.post', side_effect=mock_request)
+    def test_login_process_returns_400(self, *args, **kwargs):
+        """ It returns HTTP 400 when profile data from Auth0 is empty """
+        request = make_request()
+        result = auth_helpers.process_login(request)
+        self.assertEqual(result.status_code, 400, msg='Bad request returned')
 
-    def test_authenticate_creates_user(self):
-        """ Authenticate works creates a user """
-        user = self.backend.authenticate(**self.auth_data)
-        self.assertIsNotNone(user, msg='User exists')
+    @patch('django_auth0.auth_helpers.requests.get', side_effect=mock_request)
+    @patch('django_auth0.auth_helpers.requests.post', side_effect=mock_request)
+    @patch('django_auth0.auth_helpers.authenticate', side_effect=mock_auth)
+    def test_login_process_it_works(self, *args, **kwargs):
+        """ It returns HTTPRedirect when everything is ok """
+        request = make_request()
+        result = auth_helpers.process_login(request)
 
-    def test_authenticate_fires_exception(self):
-        """ Authenticate fires exception when insufficient data supplied """
-        self.assertRaises(ValueError, self.backend.authenticate)
+        self.assertEqual(result.status_code, 302, msg='Success redirect happens')
+        self.assertIsInstance(result, HttpResponseRedirect, msg='Correct redirect class used')
