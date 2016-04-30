@@ -34,7 +34,7 @@ Quickstart
 
 .. code-block:: python
 
-    <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
+    <script src="https://cdn.auth0.com/js/lock-X.Y.min.js"></script>
     <script>
       var lock = new Auth0Lock('{{ AUTH0_CLIENT_ID }}', '{{ AUTH0_DOMAIN }}');
 
