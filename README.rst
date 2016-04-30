@@ -2,18 +2,10 @@
 django-auth0
 =============================
 
-.. image:: https://badge.fury.io/py/django-auth0.png
-    :target: https://badge.fury.io/py/django-auth0
-
 .. image:: https://travis-ci.org/imanhodjaev/django-auth0.png?branch=master
     :target: https://travis-ci.org/imanhodjaev/django-auth0
 
 Django Auth0 authentication background
-
-Documentation
--------------
-
-The full documentation is at https://django-auth0.readthedocs.org.
 
 Quickstart
 ----------
