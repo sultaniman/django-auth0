@@ -52,14 +52,14 @@ Quickstart
 
 Options::
 
-1. `AUTH0_CLIENT_ID` - Auth0 client app id,
-2. `AUTH0_SECRET` - Auth0 app secret,
-3. `AUTH0_DOMAIN` - Auth0 subdomain `YOU_APP.auth0.com`.
-4. `AUTH0_CALLBACK_URL` - Auth0 callback url, it should be url name not path.
+1. ``AUTH0_CLIENT_ID`` - Auth0 client app id,
+2. ``AUTH0_SECRET`` - Auth0 app secret,
+3. ``AUTH0_DOMAIN`` - Auth0 subdomain ``YOU_APP.auth0.com``.
+4. ``AUTH0_CALLBACK_URL`` - Auth0 callback url, it should be url name not path.
 
 Overriding callback view
 Default callback view looks like this so you can always write your own and
-set `AUTH0_CALLBACK_URL` to your custom view it should be url name.
+set ``AUTH0_CALLBACK_URL`` to your custom view it should be url name.
 
 .. code-block:: python
 
