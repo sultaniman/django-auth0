@@ -17,9 +17,11 @@ class Auth0Backend(object):
         """
         if nickname and email:
             try:
-                return UserModel.objects.get(email__iexact=email, username__iexact=nickname)
+                return UserModel.objects.get(email__iexact=email,
+                                             username__iexact=nickname)
             except UserModel.DoesNotExist:
-                return UserModel.objects.create(email=email, username=nickname)
+                return UserModel.objects.create(email=email,
+                                                username=nickname)
 
         raise ValueError(_('Username or email can\'t be blank'))
 

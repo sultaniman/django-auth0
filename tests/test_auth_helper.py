@@ -10,8 +10,6 @@ Tests for `django-auth0` models module.
 
 from django.test import TestCase
 
-from django_auth0 import models
-
 
 class TestDjango_auth0(TestCase):
 
