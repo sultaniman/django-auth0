@@ -28,6 +28,7 @@ Quickstart
         "django.contrib.auth.backends.ModelBackend"
     ]
 
+* Add `django_auth0.auth_backend.context_processors.auth0` to `CONTEXT_PROCESSORS`:
 
 * Add Auth0 client side JavaScript and initialize it:
 
