@@ -20,7 +20,7 @@ Quickstart
 
 * Add ``django_auth0`` to ``INSTALLED_APPS``
 
-* Add ``django_auth0.auth_backend.Auth0Backend`` to ``AUTHENTICATION_BACKENDS``:
+* Add ``django_auth0.auth_backend.Auth0Backend`` to ``AUTHENTICATION_BACKENDS``
 
 .. code-block:: python
 
