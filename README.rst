@@ -30,6 +30,15 @@ Quickstart
 
 * Add ``django_auth0.auth_backend.context_processors.auth0`` to ``CONTEXT_PROCESSORS``:
 
+* Include callback urls:
+
+.. code-block::
+
+    urlpatterns = [
+        ...
+        url(r'^auth/', include('django_auth0.urls')),
+    )
+
 * Add Auth0 client side JavaScript and initialize it:
 
 .. code-block:: python
