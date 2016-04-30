@@ -2,6 +2,9 @@
 django-auth0
 =============================
 
+.. image:: https://codecov.io/gh/imanhodjaev/django-auth0/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/imanhodjaev/django-auth0
+
 .. image:: https://travis-ci.org/imanhodjaev/django-auth0.png?branch=master
     :target: https://travis-ci.org/imanhodjaev/django-auth0
 
