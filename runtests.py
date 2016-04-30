@@ -15,12 +15,17 @@ try:
         ROOT_URLCONF='django_auth0.urls',
         INSTALLED_APPS=[
             'django.contrib.auth',
+            'django.contrib.sessions',
             'django.contrib.contenttypes',
             'django.contrib.sites',
             'django_auth0'
         ],
         SITE_ID=1,
         MIDDLEWARE_CLASSES=(),
+        AUTH0_CLIENT_ID='client id',
+        AUTH0_SECRET='secret',
+        AUTH0_DOMAIN='domain',
+        AUTH0_CALLBACK_URL='auth_callback'
     )
 
     try:
