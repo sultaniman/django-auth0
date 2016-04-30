@@ -18,7 +18,7 @@ def process_login(request):
         'client_id': settings.AUTH0_CLIENT_ID,
         'client_secret': settings.AUTH0_SECRET,
         'redirect_uri': '%s%s' % (settings.FULL_URL,
-                                  reverse('settings.AUTH0_CALLBACK_URL')),
+                                  reverse(settings.AUTH0_CALLBACK_URL)),
         'code': code,
         'grant_type': 'authorization_code'
     }
@@ -37,7 +37,6 @@ def process_login(request):
 
     if user:
         login(request, user)
-
         return redirect(settings.AUTH0_CALLBACK_URL)
 
     return HttpResponse(status=400)
