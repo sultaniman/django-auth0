@@ -25,7 +25,10 @@ Install django-auth0::
 Add `django_auth0` to `INSTALLED_APPS`::
 
 Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`::
+.
+
 .. code-block:: python
+
     AUTHENTICATION_BACKENDS = [
         "django_auth0.auth_backend.Auth0Backend",
         "django.contrib.auth.backends.ModelBackend"
@@ -33,6 +36,8 @@ Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`::
 
 
 Add Auth0 client side JavaScript and initialize it::
+.
+
 .. code-block:: python
 
     <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
