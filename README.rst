@@ -28,7 +28,7 @@ Quickstart
         "django.contrib.auth.backends.ModelBackend"
     ]
 
-* Add ``django_auth0.auth_backend.context_processors.auth0`` to ``CONTEXT_PROCESSORS``:
+* Add ``django_auth0.auth_backend.context_processors.auth0`` to ``CONTEXT_PROCESSORS`` so necessary template context will be provided:
 
 * Include callback urls:
 
