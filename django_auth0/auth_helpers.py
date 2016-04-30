@@ -10,6 +10,11 @@ from django.conf import settings
 
 
 def process_login(request):
+    """
+    Default handler to login user
+    :param request:
+    :return:
+    """
     code = request.GET.get('code', None)
     json_header = {'content-type': 'application/json'}
     token_url = 'https://%s/oauth/token' % settings.AUTH0_DOMAIN
