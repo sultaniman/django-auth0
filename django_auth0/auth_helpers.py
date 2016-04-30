@@ -19,13 +19,13 @@ def process_login(request):
     token_payload = {
         'client_id': settings.AUTH0_CLIENT_ID,
         'client_secret': settings.AUTH0_SECRET,
-        'redirect_uri': '%s%s' % (settings.FULL_URL, reverse('auth0:auth_callback')),
+        'redirect_uri': '%s%s' % (settings.FULL_URL, reverse('settings.AUTH0_CALLBACK_URL')),
         'code': code,
         'grant_type': 'authorization_code'
     }
 
     token_info = requests.post(token_url, data=json.dumps(token_payload), headers=json_header).json()
-    user_url = "https://%s/userinfo?access_token=%s" % (settings.AUTH0_DOMAIN, token_info['access_token'])
+    user_url = 'https://%s/userinfo?access_token=%s' % (settings.AUTH0_DOMAIN, token_info['access_token'])
     user_info = requests.get(user_url).json()
 
     # We're saving all user information into the session
@@ -34,8 +34,7 @@ def process_login(request):
 
     if user:
         login(request, user)
-        # Redirect to the User logged in page that you want here
-        # In our case it's /dashboard
-        return redirect('dEngine2app:plan')
+
+        return redirect(settings.AUTH0_CALLBACK_URL)
 
     return HttpResponse(status=400)
