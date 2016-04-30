@@ -17,9 +17,9 @@ Quickstart
 
     pip install django-auth0
 
-* Add `django_auth0` to `INSTALLED_APPS`
+* Add ``django_auth0`` to ``INSTALLED_APPS``
 
-* Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`:
+* Add ``django_auth0.auth_backend.Auth0Backend`` to ``AUTHENTICATION_BACKENDS``:
 
 .. code-block:: python
 
@@ -28,7 +28,7 @@ Quickstart
         "django.contrib.auth.backends.ModelBackend"
     ]
 
-* Add `django_auth0.auth_backend.context_processors.auth0` to `CONTEXT_PROCESSORS`:
+* Add ``django_auth0.auth_backend.context_processors.auth0`` to ``CONTEXT_PROCESSORS``:
 
 * Add Auth0 client side JavaScript and initialize it:
 
