@@ -3,6 +3,7 @@ import sys
 try:
     from django.conf import settings
     from django.test.utils import get_runner
+    from django.core.management import call_command
 
     settings.configure(
         DEBUG=True,
@@ -10,6 +11,7 @@ try:
         DATABASES={
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': ':memory:'
             }
         },
         ROOT_URLCONF='django_auth0.urls',
@@ -35,6 +37,8 @@ try:
         pass
     else:
         setup()
+
+    call_command('migrate')
 
 except ImportError:
     import traceback
