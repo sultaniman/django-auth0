@@ -7,21 +7,21 @@ UserModel = get_user_model()
 
 
 class Auth0Backend(object):
-    def authenticate(self, email=None, nickname=None, **kwargs):
+    def authenticate(self, email=None, username=None, **kwargs):
         """
         Auth0 return a dict which contains the following fields
         :param email: user email
-        :param nickname: username
+        :param username: username
         :param kwargs: kwargs
         :return: user
         """
-        if nickname and email:
+        if username and email:
             try:
                 return UserModel.objects.get(email__iexact=email,
-                                             username__iexact=nickname)
+                                             username__iexact=username)
             except UserModel.DoesNotExist:
                 return UserModel.objects.create(email=email,
-                                                username=nickname)
+                                                username=username)
 
         raise ValueError(_('Username or email can\'t be blank'))
 
