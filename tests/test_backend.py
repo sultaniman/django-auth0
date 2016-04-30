@@ -58,7 +58,7 @@ class TestDjangoAuth0(TestCase):
         """ It returns HTTP 400 when profile data from Auth0 is empty """
         request = make_request()
         result = auth_helpers.process_login(request)
-        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result.status_code, 400, msg='Bad request returned')
 
     @patch('django_auth0.auth_helpers.requests.get', side_effect=mock_request)
     @patch('django_auth0.auth_helpers.requests.post', side_effect=mock_request)
@@ -68,5 +68,5 @@ class TestDjangoAuth0(TestCase):
         request = make_request()
         result = auth_helpers.process_login(request)
 
-        self.assertEqual(result.status_code, 302)
-        self.assertIsInstance(result, HttpResponseRedirect)
+        self.assertEqual(result.status_code, 302, msg='Success redirect happens')
+        self.assertIsInstance(result, HttpResponseRedirect, msg='Correct redirect class used')

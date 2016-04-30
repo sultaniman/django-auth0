@@ -22,12 +22,12 @@ class TestDjangoAuth0(TestCase):
     def test_authenticate_works(self):
         """ Authenticate works ok """
         user = self.backend.authenticate(**self.auth_data)
-        self.assertTrue(isinstance(user, User))
+        self.assertTrue(isinstance(user, User), msg='user is instance of User')
 
     def test_authenticate_creates_user(self):
         """ Authenticate works creates a user """
         user = self.backend.authenticate(**self.auth_data)
-        self.assertIsNotNone(user)
+        self.assertIsNotNone(user, msg='User exists')
 
     def test_authenticate_fires_exception(self):
         """ Authenticate fires exception when insufficient data supplied """
