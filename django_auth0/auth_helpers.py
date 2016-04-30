@@ -12,10 +12,9 @@ from django.conf import settings
 def process_login(request):
     """
     Default handler to login user
-    :param request:
-    :return:
+    :param request: HttpRequest
     """
-    code = request.GET.get('code', None)
+    code = request.GET.get('code', '')
     json_header = {'content-type': 'application/json'}
     token_url = 'https://%s/oauth/token' % settings.AUTH0_DOMAIN
 
@@ -32,7 +31,7 @@ def process_login(request):
                                headers=json_header).json()
 
     url = 'https://%s/userinfo?access_token=%s'
-    user_url = url % (settings.AUTH0_DOMAIN, token_info['access_token'])
+    user_url = url % (settings.AUTH0_DOMAIN, token_info.get('access_token', ''))
     user_info = requests.get(user_url).json()
 
     # We're saving all user information into the session
