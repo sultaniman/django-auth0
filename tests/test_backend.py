@@ -7,6 +7,7 @@ test_django-auth0
 Tests for `django-auth0` auth_helpers module.
 """
 from mock import patch
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
@@ -21,10 +22,16 @@ mock_user = {
     'access_token': 'access_token'
 }
 
+user = User.objects.create_user(username=mock_user['username'], email=mock_user['email'])
 
 class MockObject(object):
     def json(self):
         return mock_user
+
+
+def mock_auth(*args, **kwargs):
+    setattr(user, 'backend', 'django_auth0.auth_backends.Auth0Backend')
+    return user
 
 
 def mock_request(*args, **kwargs):
@@ -45,18 +52,19 @@ def make_request():
 class TestDjangoAuth0(TestCase):
     @patch('django_auth0.auth_helpers.requests.get', side_effect=mock_request)
     @patch('django_auth0.auth_helpers.requests.post', side_effect=mock_request)
-    def test_login_process_returns_400(self, mock_get, mock_post):
+    def test_login_process_returns_400(self, *args, **kwargs):
         """ It returns HTTP 400 when profile data from Auth0 is empty """
         request = make_request()
         result = auth_helpers.process_login(request)
         self.assertEqual(result.status_code, 400)
 
-    # @patch('django_auth0.auth_helpers.requests.get', side_effect=mock_request)
-    # @patch('django_auth0.auth_helpers.requests.post', side_effect=mock_request)
-    # def test_login_process_it_works(self, mock_get, mock_post):
-    #     """ It returns HTTPRedirect when everything is ok """
-    #     request = make_request()
-    #     result = auth_helpers.process_login(request)
-    #     print(result)
-    #
-    #     self.assertEqual(result.status_code, 420)
+    @patch('django_auth0.auth_helpers.requests.get', side_effect=mock_request)
+    @patch('django_auth0.auth_helpers.requests.post', side_effect=mock_request)
+    @patch('django_auth0.auth_helpers.authenticate', side_effect=mock_auth)
+    def test_login_process_it_works(self, *args, **kwargs):
+        """ It returns HTTPRedirect when everything is ok """
+        request = make_request()
+        result = auth_helpers.process_login(request)
+
+        self.assertEqual(result.status_code, 302)
+        self.assertIsInstance(result, HttpResponseRedirect)
