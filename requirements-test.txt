@@ -1,0 +1,7 @@
+django>=1.9.5
+coverage
+mock>=2.0.0
+flake8>=2.5.4
+tox>=2.3.1
+
+# Additional test requirements go here
