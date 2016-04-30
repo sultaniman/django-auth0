@@ -8,16 +8,16 @@ try:
         DEBUG=True,
         USE_TZ=True,
         DATABASES={
-            "default": {
-                "ENGINE": "django.db.backends.sqlite3",
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
             }
         },
-        ROOT_URLCONF="django_auth0.urls",
+        ROOT_URLCONF='django_auth0.urls',
         INSTALLED_APPS=[
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
-            "django.contrib.sites",
-            "django_auth0",
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sites',
+            'django_auth0'
         ],
         SITE_ID=1,
         MIDDLEWARE_CLASSES=(),
@@ -34,7 +34,7 @@ try:
 except ImportError:
     import traceback
     traceback.print_exc()
-    raise ImportError("To fix this error, run: pip install -r requirements-test.txt")
+    raise ImportError('To fix this error, run: pip install -r requirements-test.txt')
 
 
 def run_tests(*test_args):
@@ -42,8 +42,8 @@ def run_tests(*test_args):
         test_args = ['tests']
 
     # Run tests
-    TestRunner = get_runner(settings)
-    test_runner = TestRunner()
+    runner = get_runner(settings)
+    test_runner = runner()
 
     failures = test_runner.run_tests(test_args)
 
