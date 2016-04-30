@@ -54,7 +54,7 @@ Features
 TODO
 --------
 
-* Write tests
+* Develop authentication test
 
 
 Running Tests
