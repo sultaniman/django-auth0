@@ -18,14 +18,13 @@ The full documentation is at https://django-auth0.readthedocs.org.
 Quickstart
 ----------
 
-Install django-auth0::
+* Install django-auth0::
 
     pip install django-auth0
 
-Add `django_auth0` to `INSTALLED_APPS`::
+* Add `django_auth0` to `INSTALLED_APPS`
 
-Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`::
-.
+* Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`:
 
 .. code-block:: python
 
@@ -35,8 +34,7 @@ Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`::
     ]
 
 
-Add Auth0 client side JavaScript and initialize it::
-.
+* Add Auth0 client side JavaScript and initialize it:
 
 .. code-block:: python
 
