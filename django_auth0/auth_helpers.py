@@ -22,8 +22,7 @@ def process_login(request):
     token_payload = {
         'client_id': settings.AUTH0_CLIENT_ID,
         'client_secret': settings.AUTH0_SECRET,
-        'redirect_uri': '%s%s' % (settings.FULL_URL,
-                                  reverse(settings.AUTH0_CALLBACK_URL)),
+        'redirect_uri': reverse(settings.AUTH0_CALLBACK_URL),
         'code': code,
         'grant_type': 'authorization_code'
     }
