@@ -65,10 +65,9 @@ set `AUTH0_CALLBACK_URL` to your custom view it should be url name.
     def process_login(request):
         """
         Default handler to login user
-        :param request:
-        :return:
+        :param request: HttpRequest
         """
-        code = request.GET.get('code', None)
+        code = request.GET.get('code', '')
         json_header = {'content-type': 'application/json'}
         token_url = 'https://%s/oauth/token' % settings.AUTH0_DOMAIN
 
