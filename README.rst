@@ -25,9 +25,7 @@ Install django-auth0::
 Add `django_auth0` to `INSTALLED_APPS`::
 
 Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`::
-
 .. code-block:: python
-
     AUTHENTICATION_BACKENDS = [
         "django_auth0.auth_backend.Auth0Backend",
         "django.contrib.auth.backends.ModelBackend"
@@ -35,9 +33,7 @@ Add `django_auth0.auth_backend.Auth0Backend` to `AUTHENTICATION_BACKENDS`::
 
 
 Add Auth0 client side JavaScript and initialize it::
-
-
-.. code-block:: html
+.. code-block:: python
 
     <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
     <script>
@@ -64,7 +60,7 @@ Options::
 
 Overriding callback view::
 Default callback view looks like this so you can always write your own and
-set `AUTH0_CALLBACK_URL` to your custom view it should be url name
+set `AUTH0_CALLBACK_URL` to your custom view it should be url name.
 
 .. code-block:: python
 
