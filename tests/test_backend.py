@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 """
-test_django-auth0
-------------
 Tests for `django-auth0` auth_helpers module.
 """
 from mock import patch
@@ -31,15 +29,18 @@ class MockObject(object):
 
 
 def mock_auth(*args, **kwargs):
+    """ Returns creates test user and assigns authentication backend """
     setattr(user, 'backend', 'django_auth0.auth_backends.Auth0Backend')
     return user
 
 
 def mock_request(*args, **kwargs):
+    """ Returns mocked object call result for requests.join """
     return MockObject()
 
 
 def make_request():
+    """ Creates request factory object with session and url params """
     factory = RequestFactory()
     url = reverse('auth_callback')
     request = factory.get('%s/?code=code' % url)
