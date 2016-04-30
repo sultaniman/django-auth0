@@ -41,6 +41,7 @@ Add Auth0 client side JavaScript and initialize it::
     </script>
 
 Options::
+
 1. `AUTH0_CLIENT_ID` - Auth0 client app id,
 2. `AUTH0_SECRET` - Auth0 app secret,
 3. `AUTH0_DOMAIN` - Auth0 subdomain `YOU_APP.auth0.com`.
