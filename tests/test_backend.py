@@ -24,6 +24,7 @@ mock_user = {
 
 user = User.objects.create_user(username=mock_user['username'], email=mock_user['email'])
 
+
 class MockObject(object):
     def json(self):
         return mock_user
