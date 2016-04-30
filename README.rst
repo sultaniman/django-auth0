@@ -13,9 +13,10 @@ Django Auth0 authentication background
 Quickstart
 ----------
 
-* Install django-auth0::
+* Install django-auth0
 
-    pip install django-auth0
+.. code-block:: bash
+    $ pip install django-auth0
 
 * Add ``django_auth0`` to ``INSTALLED_APPS``
 
