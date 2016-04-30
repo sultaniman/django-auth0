@@ -26,7 +26,10 @@ class Auth0Backend(object):
         raise ValueError(_('Username or email can\'t be blank'))
 
     def get_user(self, user_id):
-        try:
-            return UserModel._default_manager.get(pk=user_id)
-        except UserModel.DoesNotExist:
-            return None
+        """
+        Primary key identifier
+        It is better to raise UserModel.DoesNotExist
+        :param user_id:
+        :return: UserModel instance
+        """
+        return UserModel._default_manager.get(pk=user_id)
