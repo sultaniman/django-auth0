@@ -116,6 +116,7 @@ TODO
 --------
 
 * Improve tests
+* Make a dummy Django project which uses this app
 
 
 Running Tests
