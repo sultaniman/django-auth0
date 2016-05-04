@@ -3,7 +3,6 @@ import json
 import requests
 
 from django.contrib.auth import login, authenticate
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from .utils import get_config
@@ -22,7 +21,7 @@ def process_login(request):
     token_payload = {
         'client_id': config['AUTH0_CLIENT_ID'],
         'client_secret': config['AUTH0_SECRET'],
-        'redirect_uri': reverse(config['AUTH0_CALLBACK_URL']),
+        'redirect_uri': config['AUTH0_CALLBACK_URL'],
         'code': code,
         'grant_type': 'authorization_code'
     }
