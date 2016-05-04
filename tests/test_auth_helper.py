@@ -5,6 +5,7 @@
 Tests for `django-auth0` auth_helpers module.
 """
 from mock import patch
+
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.test import TestCase, RequestFactory
@@ -12,6 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
 
 from django_auth0 import auth_helpers
+from django_auth0 import views
 
 
 mock_user = {
@@ -37,6 +39,11 @@ def mock_auth(*args, **kwargs):
 def mock_request(*args, **kwargs):
     """ Returns mocked object call result for requests.join """
     return MockObject()
+
+
+def mock_response(*args, **kwargs):
+    """ Returns HTTPResponse """
+    return HttpResponseRedirect(redirect_to='/')
 
 
 def make_request():
@@ -69,6 +76,15 @@ class TestDjangoAuth0(TestCase):
         """ It returns HTTPRedirect when everything is ok """
         request = make_request()
         result = auth_helpers.process_login(request)
+
+        self.assertEqual(result.status_code, 302, msg='Success redirect happens')
+        self.assertIsInstance(result, HttpResponseRedirect, msg='Correct redirect class used')
+
+    @patch('django_auth0.views.auth_callback', side_effect=mock_response)
+    def test_callback_view(self, *args, **kwargs):
+        """ View returns HTTPRedirect when everything is ok """
+        request = make_request()
+        result = views.auth_callback(request)
 
         self.assertEqual(result.status_code, 302, msg='Success redirect happens')
         self.assertIsInstance(result, HttpResponseRedirect, msg='Correct redirect class used')
