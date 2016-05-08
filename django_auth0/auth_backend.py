@@ -7,12 +7,11 @@ UserModel = get_user_model()
 
 
 class Auth0Backend(object):
-    def authenticate(self, email=None, username=None, **kwargs):
+    def authenticate(self, email=None, username=None):
         """
         Auth0 return a dict which contains the following fields
         :param email: user email
         :param username: username
-        :param kwargs: kwargs
         :return: user
         """
         if username and email:
@@ -32,4 +31,5 @@ class Auth0Backend(object):
         :param user_id:
         :return: UserModel instance
         """
+        # noinspection PyProtectedMember
         return UserModel._default_manager.get(pk=user_id)
