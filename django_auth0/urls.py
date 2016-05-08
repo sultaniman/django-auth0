@@ -4,5 +4,5 @@ from .views import auth_callback
 
 
 urlpatterns = [
-    url('callback$', auth_callback, name='auth_callback'),
+    url(r'callback/?$', auth_callback, name='auth_callback'),
 ]
