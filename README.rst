@@ -19,7 +19,8 @@ Quickstart
 
 * Install django-auth0
 
-.. code-block:: bash
+.. code-block::bash
+
     $ pip install django-auth0
 
 * Add ``django_auth0`` to ``INSTALLED_APPS``
@@ -37,7 +38,7 @@ Quickstart
 
 * Include callback urls
 
-.. code-block:: python
+.. code-block::python
 
     urlpatterns = [
         ...
@@ -46,13 +47,13 @@ Quickstart
 
 Update ``AUTH0_CALLBACK_URL`` in ``settings.py`` to the following if want to use default authentication handler
 
-.. code-block:: python
+.. code-block::python
     AUTH0_CALLBACK_URL = 'http://YOUR_DOMAIN/auth/auth_callback'
 
 
 * Add Auth0 client side JavaScript and initialize it
 
-.. code-block:: python
+.. code-block::python
 
     <script src="https://cdn.auth0.com/js/lock-X.Y.min.js"></script>
     <script>
@@ -70,7 +71,7 @@ Update ``AUTH0_CALLBACK_URL`` in ``settings.py`` to the following if want to use
       });
     </script>
 
-Options::
+Options:
 
 1. ``AUTH0_CLIENT_ID`` - Auth0 client app id,
 2. ``AUTH0_SECRET`` - Auth0 app secret,
@@ -147,7 +148,7 @@ Credits
 Tools used in rendering this package:
 
 *  Cookiecutter_
-*  `cookiecutter-pypackage`_
+*  `cookiecutter-djangopackage`_
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
