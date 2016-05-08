@@ -121,14 +121,13 @@ set ``AUTH0_CALLBACK_URL`` to your custom view it should be url name.
         return HttpResponse(status=400)
 
 
-Features
---------
+`Sample application`_ at https://github.com/imanhodjaev/auth0-sample
 
 TODO
 --------
 
 * Improve tests
-* Make a dummy Django project which uses this app
+* Add Auth0 user profile model
 
 
 Running Tests
@@ -152,3 +151,4 @@ Tools used in rendering this package:
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
+.. _`Sample application`: https://github.com/imanhodjaev/auth0-sample
