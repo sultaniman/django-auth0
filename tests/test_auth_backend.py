@@ -16,7 +16,7 @@ class TestDjangoAuth0(TestCase):
         self.backend = Auth0Backend()
         self.auth_data = {
             'email': 'email@email.com',
-            'username': 'test_username'
+            'nickname': 'test_username'
         }
 
     def test_authenticate_works(self):
@@ -31,4 +31,9 @@ class TestDjangoAuth0(TestCase):
 
     def test_authenticate_fires_exception(self):
         """ Authenticate fires exception when insufficient data supplied """
-        self.assertRaises(ValueError, self.backend.authenticate)
+        self.assertRaises(ValueError, self._value_error)
+        self.assertRaises(KeyError, self.backend.authenticate)
+
+    def _value_error(self):
+        self.auth_data['email'] = None
+        return self.backend.authenticate(**self.auth_data)
