@@ -28,7 +28,8 @@ try:
         AUTH0_CLIENT_ID='client id',
         AUTH0_SECRET='secret',
         AUTH0_DOMAIN='domain',
-        AUTH0_CALLBACK_URL='auth_callback'
+        AUTH0_CALLBACK_URL='auth_callback',
+        AUTH0_SUCCESS_URL='/'
     )
 
     try:
