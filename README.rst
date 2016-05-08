@@ -44,6 +44,12 @@ Quickstart
         url(r'^auth/', include('django_auth0.urls')),
     )
 
+Update ``AUTH0_CALLBACK_URL`` in ``settings.py`` to the following if want to use default authentication handler
+
+.. code-block:: python
+    AUTH0_CALLBACK_URL = 'http://YOUR_DOMAIN/auth/auth_callback'
+
+
 * Add Auth0 client side JavaScript and initialize it
 
 .. code-block:: python
