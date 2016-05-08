@@ -40,6 +40,6 @@ def process_login(request):
 
     if user:
         login(request, user)
-        return redirect(config['AUTH0_CALLBACK_URL'])
+        return redirect(config['AUTH0_SUCCESS_URL'])
 
     return HttpResponse(status=400)
