@@ -5,12 +5,12 @@ django-auth0
 .. image:: https://codecov.io/gh/imanhodjaev/django-auth0/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/imanhodjaev/django-auth0
 
-.. image:: https://travis-ci.org/imanhodjaev/django-auth0.png?branch=master
-    :target: https://travis-ci.org/imanhodjaev/django-auth0
-
 .. image:: https://landscape.io/github/imanhodjaev/django-auth0/master/landscape.svg?style=flat
    :target: https://landscape.io/github/imanhodjaev/django-auth0/master
    :alt: Code Health
+
+.. image:: https://travis-ci.org/imanhodjaev/django-auth0.png?branch=master
+    :target: https://travis-ci.org/imanhodjaev/django-auth0
 
 Django Auth0 authentication background
 
