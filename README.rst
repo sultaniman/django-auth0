@@ -33,7 +33,7 @@ Quickstart
         "django.contrib.auth.backends.ModelBackend"
     ]
 
-* Add ``django_auth0.auth_backend.context_processors.auth0`` to ``CONTEXT_PROCESSORS`` so necessary template context will be provided
+* Add ``django_auth0.context_processors.auth0`` to ``CONTEXT_PROCESSORS`` so necessary template context will be provided
 
 * Include callback urls
 
@@ -70,6 +70,7 @@ Options::
 2. ``AUTH0_SECRET`` - Auth0 app secret,
 3. ``AUTH0_DOMAIN`` - Auth0 subdomain ``YOU_APP.auth0.com``.
 4. ``AUTH0_CALLBACK_URL`` - Auth0 callback url is full url to your callback view like ``https://YOUR_DOMAIN/CALLBACK``
+5. ``AUTH0_SUCCESS_URL`` - Url to redirect once you login successfully
 
 Overriding callback view
 Default callback view looks like this so you can always write your own and
@@ -108,7 +109,7 @@ set ``AUTH0_CALLBACK_URL`` to your custom view it should be url name.
 
         if user:
             login(request, user)
-            return redirect(settings.AUTH0_CALLBACK_URL)
+            return redirect(settings.AUTH0_SUCCESS_URL)
 
         return HttpResponse(status=400)
 
