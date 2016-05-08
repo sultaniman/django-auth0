@@ -7,13 +7,16 @@ UserModel = get_user_model()
 
 
 class Auth0Backend(object):
-    def authenticate(self, email=None, username=None):
+    def authenticate(self, **kwargs):
         """
         Auth0 return a dict which contains the following fields
         :param email: user email
         :param username: username
         :return: user
         """
+        email = kwargs.pop('email')
+        username = kwargs.pop('nickname')
+
         if username and email:
             try:
                 return UserModel.objects.get(email__iexact=email,
