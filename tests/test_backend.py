@@ -26,7 +26,6 @@ class TestDjangoAuth0(TestCase):
 
     def test_exception_raised_when_user_not_found(self):
         """ Test if get user returns a user if it exists in database """
-        # print(self.backend.get_user(111))
         self.assertRaises(User.DoesNotExist, self._get_user)
 
     def _get_user(self):
