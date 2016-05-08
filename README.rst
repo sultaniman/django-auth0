@@ -17,11 +17,7 @@ Django Auth0 authentication background
 Quickstart
 ----------
 
-* Install django-auth0
-
-.. code-block::bash
-
-    $ pip install django-auth0
+* Install django-auth0 ``$ pip install django-auth0``
 
 * Add ``django_auth0`` to ``INSTALLED_APPS``
 
@@ -121,7 +117,7 @@ set ``AUTH0_CALLBACK_URL`` to your custom view it should be url name.
         return HttpResponse(status=400)
 
 
-`Sample application`_ at https://github.com/imanhodjaev/auth0-sample
+`Sample application`_ is at https://github.com/imanhodjaev/auth0-sample
 
 TODO
 --------
