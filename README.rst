@@ -23,7 +23,7 @@ Quickstart
 
 * Add ``django_auth0.auth_backend.Auth0Backend`` to ``AUTHENTICATION_BACKENDS``
 
-.. code-block:: python
+.. code-block::python
 
     AUTHENTICATION_BACKENDS = [
         "django_auth0.auth_backend.Auth0Backend",
@@ -79,7 +79,7 @@ Overriding callback view
 Default callback view looks like this so you can always write your own and
 set ``AUTH0_CALLBACK_URL`` to your custom view it should be url name.
 
-.. code-block:: python
+.. code-block::python
 
     def process_login(request):
         """
