@@ -1,4 +1,4 @@
-.PHONY: clean-pyc clean-build docs
+.PHONY: clean-pyc clean-build
 
 help:
 	@echo "clean-build - remove build artifacts"
