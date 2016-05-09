@@ -12,7 +12,7 @@ django-auth0
 .. image:: https://travis-ci.org/imanhodjaev/django-auth0.png?branch=master
     :target: https://travis-ci.org/imanhodjaev/django-auth0
 
-Django Auth0 authentication background
+Django Auth0 authentication backend
 
 Quickstart
 ----------
