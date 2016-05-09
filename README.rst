@@ -13,6 +13,8 @@ django-auth0
     :target: https://travis-ci.org/imanhodjaev/django-auth0
 
 Django Auth0 authentication backend
+Backend implemented against Auth0 `Regular Python application`_
+
 
 Quickstart
 ----------
@@ -148,3 +150,4 @@ Tools used in rendering this package:
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
 .. _`Sample application`: https://github.com/imanhodjaev/auth0-sample
+.. _`Regular Python application`: https://auth0.com/docs/quickstart/webapp/python/
