@@ -31,7 +31,9 @@ def process_login(request):
                                headers=json_header).json()
 
     url = 'https://%s/userinfo?access_token=%s'
-    user_url = url % (config['AUTH0_DOMAIN'], token_info.get('access_token', ''))
+    user_url = url % (config['AUTH0_DOMAIN'],
+                      token_info.get('access_token', ''))
+
     user_info = requests.get(user_url).json()
 
     # We're saving all user information into the session

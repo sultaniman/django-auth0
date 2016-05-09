@@ -11,4 +11,3 @@ def get_config():
         'AUTH0_CALLBACK_URL': settings.AUTH0_CALLBACK_URL,
         'AUTH0_SUCCESS_URL': settings.AUTH0_SUCCESS_URL,
     }
-

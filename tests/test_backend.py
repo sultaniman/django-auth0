@@ -18,7 +18,8 @@ class TestDjangoAuth0(TestCase):
 
     def setUp(self):
         self.backend = Auth0Backend()
-        self.user = User.objects.create_user(username='user', email='email@email.com')
+        self.user = User.objects.create_user(username='user',
+                                             email='email@email.com')
 
     def test_existing_user_returned(self):
         """ Test if get user returns a user if it exists in database """

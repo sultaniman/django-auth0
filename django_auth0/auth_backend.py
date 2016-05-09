@@ -27,6 +27,7 @@ class Auth0Backend(object):
 
         raise ValueError(_('Username or email can\'t be blank'))
 
+    # noinspection PyProtectedMember
     def get_user(self, user_id):
         """
         Primary key identifier
@@ -34,4 +35,4 @@ class Auth0Backend(object):
         :param user_id:
         :return: UserModel instance
         """
-        return UserModel._default_manager.get(pk=user_id)   # noinspection PyProtectedMember
+        return UserModel._default_manager.get(pk=user_id)

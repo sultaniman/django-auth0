@@ -22,7 +22,8 @@ mock_user = {
     'access_token': 'access_token'
 }
 
-user = User.objects.create_user(username=mock_user['username'], email=mock_user['email'])
+user = User.objects.create_user(username=mock_user['username'],
+                                email=mock_user['email'])
 
 
 class MockObject(object):
@@ -77,8 +78,11 @@ class TestDjangoAuth0(TestCase):
         request = make_request()
         result = auth_helpers.process_login(request)
 
-        self.assertEqual(result.status_code, 302, msg='Success redirect happens')
-        self.assertIsInstance(result, HttpResponseRedirect, msg='Correct redirect class used')
+        self.assertEqual(result.status_code, 302,
+                         msg='Success redirect happens')
+
+        self.assertIsInstance(result, HttpResponseRedirect,
+                              msg='Correct redirect class used')
 
     @patch('django_auth0.views.auth_callback', side_effect=mock_response)
     def test_callback_view(self, *args, **kwargs):
@@ -86,5 +90,8 @@ class TestDjangoAuth0(TestCase):
         request = make_request()
         result = views.auth_callback(request)
 
-        self.assertEqual(result.status_code, 302, msg='Success redirect happens')
-        self.assertIsInstance(result, HttpResponseRedirect, msg='Correct redirect class used')
+        self.assertEqual(result.status_code, 302,
+                         msg='Success redirect happens')
+
+        self.assertIsInstance(result, HttpResponseRedirect,
+                              msg='Correct redirect class used')
