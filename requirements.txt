@@ -1,2 +1,2 @@
-django>=1.9.5
+django>=1.9.6
 requests>=2.10.0
