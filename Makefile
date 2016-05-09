@@ -33,7 +33,7 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source django_auth0 runtests.py tests
+	coverage run --source django_auth0 --omit=django_auth0/apps.py runtests.py tests
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
