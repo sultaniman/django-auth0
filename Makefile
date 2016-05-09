@@ -9,6 +9,7 @@ help:
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "release - package and upload a release"
 	@echo "sdist - package"
+	@echo "checkdocs - lint README.rst"
 
 clean: clean-build clean-pyc
 
@@ -44,3 +45,7 @@ release: clean
 sdist: clean
 	python setup.py sdist
 	ls -l dist
+
+
+checkdocs:
+	python setup.py checkdocs
