@@ -34,5 +34,4 @@ class Auth0Backend(object):
         :param user_id:
         :return: UserModel instance
         """
-        # noinspection PyProtectedMember
-        return UserModel._default_manager.get(pk=user_id)
+        return UserModel._default_manager.get(pk=user_id)   # noinspection PyProtectedMember

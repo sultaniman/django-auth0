@@ -2,6 +2,5 @@
 from .utils import get_config
 
 
-# noinspection PyUnusedLocal
-def auth0(request):
+def auth0(request):  # noinspection PyUnusedLocal
     return get_config()
