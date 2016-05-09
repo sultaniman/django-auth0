@@ -124,9 +124,10 @@ set ``AUTH0_CALLBACK_URL`` to your custom view it should be url name.
 TODO
 --------
 
-* Improve tests
-* Add Auth0 user profile model
-
+* Improve tests,
+* Add Auth0 user profile model,
+* Add support for settings from Auth0,
+* Move string literals to configuration file
 
 Running Tests
 --------------
