@@ -16,7 +16,10 @@ class TestDjangoAuth0(TestCase):
         self.backend = Auth0Backend()
         self.auth_data = {
             'email': 'email@email.com',
-            'nickname': 'test_username'
+            'nickname': 'test_username',
+            'name': 'Test User',
+            'picture': 'http://localhost/test.png',
+            'user_id': 'auth0|1111111',
         }
 
     def test_authenticate_works(self):
@@ -32,8 +35,14 @@ class TestDjangoAuth0(TestCase):
     def test_authenticate_fires_exception(self):
         """ Authenticate fires exception when insufficient data supplied """
         self.assertRaises(ValueError, self._value_error)
-        self.assertRaises(KeyError, self.backend.authenticate)
 
     def _value_error(self):
         self.auth_data['email'] = None
         return self.backend.authenticate(**self.auth_data)
+
+    def test_authenticate_ignores_non_auth0(self):
+        """
+        Auth0Backend.authenticate() will ignore attempts to authenticate
+        that do not contain the user info fields that are always provided by auth0
+        """
+        self.assertIsNone(self.backend.authenticate())
