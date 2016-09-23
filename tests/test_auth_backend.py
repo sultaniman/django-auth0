@@ -37,7 +37,7 @@ class TestDjangoAuth0(TestCase):
         self.assertRaises(ValueError, self._value_error)
 
     def _value_error(self):
-        self.auth_data['email'] = None
+        self.auth_data['user_id'] = None
         return self.backend.authenticate(**self.auth_data)
 
     def test_authenticate_ignores_non_auth0(self):
