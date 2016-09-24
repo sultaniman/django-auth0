@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
 
+
 UserModel = get_user_model()
 
 # user profile keys that are always present as specified by
@@ -39,7 +40,8 @@ class Auth0Backend(object):
         if user_id is None:
             raise ValueError(_('user_id can\'t be blank!'))
 
-        # The format of user_id is {identity provider id}|{unique id in the provider}
+        # The format of user_id is
+        #    {identity provider id}|{unique id in the provider}
         # The pipe character is invalid for the django username field
         # The solution is to replace the pipe with a dash
         username = user_id.replace('|', '-')
