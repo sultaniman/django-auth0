@@ -1,5 +1,5 @@
-django>=1.9.6
+django>=1.9.8
 coverage
 mock>=2.0.0
-flake8>=2.5.4
+flake8>=3.0.4
 tox>=2.3.1

@@ -35,9 +35,9 @@ class Auth0Backend(object):
         if is_auth0 is False:
             return None
 
-        user_id = kwargs.get('user_id', '')
+        user_id = kwargs.get('user_id', None)
 
-        if not user_id.strip():
+        if not user_id:
             raise ValueError(_('user_id can\'t be blank!'))
 
         # The format of user_id is
