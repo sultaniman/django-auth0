@@ -42,7 +42,8 @@ class TestDjangoAuth0(TestCase):
 
     def test_authenticate_ignores_non_auth0(self):
         """
-        Auth0Backend.authenticate() will ignore attempts to authenticate
-        that do not contain the user info fields that are always provided by auth0
+        Auth0Backend.authenticate() will ignore
+        attempts to authenticate that do not contain
+        the user info fields that are always provided by auth0
         """
         self.assertIsNone(self.backend.authenticate())
