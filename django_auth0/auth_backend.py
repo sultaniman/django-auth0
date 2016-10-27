@@ -23,17 +23,12 @@ class Auth0Backend(object):
         :param kwargs: user information provided by auth0
         :return: user
         """
-        is_auth0 = True
-
         # check that each auth0 key is present in kwargs
         for key in AUTH0_USER_INFO_KEYS:
             if key not in kwargs:
-                is_auth0 = False
-                break
-
-        # End the authentication attempt if this is not an auth0 payload
-        if is_auth0 is False:
-            return None
+                # End the authentication attempt if this is not an Auth0
+                # payload.
+                return
 
         user_id = kwargs.get('user_id', None)
 
@@ -47,11 +42,9 @@ class Auth0Backend(object):
         username = user_id.replace('|', '-')
 
         try:
-            user = UserModel.objects.get(username__iexact=username)
+            return UserModel.objects.get(username__iexact=username)
         except UserModel.DoesNotExist:
-            user = UserModel.objects.create(username=username)
-
-        return user
+            return UserModel.objects.create(username=username)
 
     # noinspection PyProtectedMember
     def get_user(self, user_id):
