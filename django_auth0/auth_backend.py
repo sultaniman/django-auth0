@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
-
+from .utils import AUTH0_FIELD_MAPPING, map_auth0_attrs_to_user
 
 UserModel = get_user_model()
 
@@ -14,12 +14,6 @@ AUTH0_USER_INFO_KEYS = [
     'picture',
     'user_id',
 ]
-
-AUTH0_FIELD_MAPPING = {
-    'user_metadata.first_name': 'first_name',
-    'user_metadata.last_name': 'last_name',
-    'email': 'email'
-}
 
 
 class Auth0Backend(object):
@@ -57,21 +51,7 @@ class Auth0Backend(object):
             u.set_unusable_password()
             modified = True
 
-        for attr_path, local_field_name in AUTH0_FIELD_MAPPING.items():
-            path = attr_path.split('.')
-            v = kwargs.get(path.pop(0))
-            for k in path:
-                try:
-                    v = v.get(k)
-                except Exception as err:
-                    print(err)
-                    break
-                if not v:
-                    break
-            else:
-                if getattr(u, local_field_name) != v:
-                    setattr(u, local_field_name, v)
-                    modified = True
+        modified = modified | map_auth0_attrs_to_user(u, **kwargs)
 
         authorization = kwargs.get('authorization')
         if authorization:

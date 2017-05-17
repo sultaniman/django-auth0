@@ -3,6 +3,15 @@ from auth0.v3.authentication import GetToken
 from django.conf import settings
 
 
+AUTH0_FIELD_MAPPING = {
+    'user_metadata.first_name': 'first_name',
+    'user_metadata.last_name': 'last_name',
+    'email': 'email'
+}
+
+USER_AUTH0_FIELD_MAPPING = {v: k for k, v in AUTH0_FIELD_MAPPING.items()}
+
+
 def get_config():
     """ Collects AUTH0_* configurations """
     return {
@@ -32,3 +41,44 @@ def get_token(*, a0_config: dict=None, audience=None) -> str:
         audience
     )
     return token['access_token']
+
+
+def map_auth0_attrs_to_user(user_object, **kwargs):
+    modified = False
+    for attr_path, local_field_name in AUTH0_FIELD_MAPPING.items():
+        path = attr_path.split('.')
+        v = kwargs.get(path.pop(0))
+        for k in path:
+            try:
+                v = v.get(k)
+            except Exception as err:
+                print(err)
+                break
+            if not v:
+                break
+        else:
+            if getattr(user_object, local_field_name) != v:
+                setattr(user_object, local_field_name, v)
+                modified = True
+    return modified
+
+
+def map_user_attrs_to_auth0(user: dict, instance):
+    user_updates = dict()
+    for attr, mapping in USER_AUTH0_FIELD_MAPPING.items():
+        path = mapping.split('.')
+        v = getattr(instance,
+        v = kwargs.get(path.pop(0))
+        for k in path:
+            try:
+                v = v.get(k)
+            except Exception as err:
+                print(err)
+                break
+            if not v:
+                break
+        else:
+            if getattr(user_object, local_field_name) != v:
+                setattr(user_object, local_field_name, v)
+                modified = True
+    return modified
