@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+import datetime
+from typing import Optional
+
+import requests
 from auth0.v3.authentication import GetToken
 from django.conf import settings
 from logging import getLogger
@@ -45,13 +49,68 @@ def get_token(*, a0_config: dict=None, audience=None) -> str:
     return token['access_token']
 
 
-def nested_set(dic, keys, value):
+class TokenManager(object):
+    # in order to simplify logic, tokens are expired early
+    lifetime = datetime.timedelta(hours=23)
+    __cache = dict()
+
+    def __init__(self):
+        pass
+
+    def get_token(self, audience=None):
+        now = datetime.datetime.now()
+        token = self.__cache.get(audience)
+        if token:
+            if token['expires'] > now:
+                logger.debug(f'{audience} token cache hit')
+                token['hits'] += 1
+                return token['access_token']
+            logger.debug(f'{audience} token expired ({token["hits"]} hits)')
+        access_token = get_token(
+            a0_config=get_config(),
+            audience=audience
+        )
+        self.__cache[audience] = {
+            'expires': now + self.lifetime,
+            'access_token': access_token,
+            'hits': 0
+        }
+        return access_token
+
+
+def get_auth0_group_by_name(group_name: str, token: str) -> Optional[dict]:
+    """
+    Get an Auth0 group by name
+    
+    :return: group, if found, else none
+    """
+    r = requests.get(
+        settings.AUTH0_AUTHORIZATION_API + '/groups',
+        headers={
+            'Authorization': f'Bearer {token}'
+        }
+    )
+    assert r.status_code == 200, \
+        f'bad status when creating the group in Auth0: {r}'
+    j = r.json()
+    assert len(j['groups']) == j['total']  # TODO pagination
+
+    for g in j['groups']:
+        if g['name'] == group_name:
+            return g
+
+    return None
+
+
+def nested_set(dic: dict, keys: list, value):
+    """ Set a nested dict value given a list of indices """
     for key in keys[:-1]:
         dic = dic.setdefault(key, {})
     dic[keys[-1]] = value
 
 
 def map_auth0_attrs_to_user(user_object, **kwargs):
+    """ Update provided user with attributes from the Auth0 API """
     modified = False
     for attr_path, local_field_name in AUTH0_FIELD_MAPPING.items():
         path = attr_path.split('.')
@@ -71,7 +130,14 @@ def map_auth0_attrs_to_user(user_object, **kwargs):
     return modified
 
 
-def generate_patch(instance, patch=None) -> dict:
+def generate_auth0_user_patch_request(instance, patch=None) -> dict:
+    """
+    Generate the body of a PATCH request to update a user
+    
+    :param instance: User object
+    :param patch: Base request dict that will be extended and overridden
+    :return: Dict that may be serialized and sent to Auth0 as the body of the request
+     """
     if not patch:
         patch = {}
     for attr, mapping in USER_AUTH0_FIELD_MAPPING.items():
