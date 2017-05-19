@@ -22,7 +22,9 @@ def update_auth0_group(sender, instance, **kwargs):
     if group:
         return
     else:
-        logger.warning(f'Propagating group "{instance.name}" to Auth0')
+        logger.warning('Propagating group "{instance_name}" to Auth0'.format(
+            instance_name=instance.name
+        ))
         r = requests.post(
             settings.AUTH0_AUTHORIZATION_API + '/groups',
             json={
@@ -30,7 +32,7 @@ def update_auth0_group(sender, instance, **kwargs):
                 'description': '(no description provided)'
             },
             headers={
-                'Authorization': f'Bearer {token}'
+                'Authorization': 'Bearer ' + token
             }
         )
         assert r.status_code == 200

@@ -57,15 +57,20 @@ class TokenManager(object):
     def __init__(self):
         pass
 
-    def get_token(self, audience=None):
+    def get_token(self, audience: str=None) -> str:
         now = datetime.datetime.now()
         token = self.__cache.get(audience)
         if token:
             if token['expires'] > now:
-                logger.debug(f'{audience} token cache hit')
+                logger.debug('{audience} token cache hit'.format(
+                    audience=audience
+                ))
                 token['hits'] += 1
                 return token['access_token']
-            logger.debug(f'{audience} token expired ({token["hits"]} hits)')
+            logger.debug('{audience} token expired ({hits} hits)'.format(
+                audience=audience,
+                hits=token["hits"],
+            ))
         access_token = get_token(
             a0_config=get_config(),
             audience=audience
@@ -87,11 +92,11 @@ def get_auth0_group_by_name(group_name: str, token: str) -> Optional[dict]:
     r = requests.get(
         settings.AUTH0_AUTHORIZATION_API + '/groups',
         headers={
-            'Authorization': f'Bearer {token}'
+            'Authorization': 'Bearer ' + token
         }
     )
     assert r.status_code == 200, \
-        f'bad status when creating the group in Auth0: {r}'
+        'bad status when creating the group in Auth0: ' + str(r)
     j = r.json()
     assert len(j['groups']) == j['total']  # TODO pagination
 
