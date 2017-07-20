@@ -94,14 +94,18 @@ def update_auth0_groups(sender, instance, model, action, pk_set, **kwargs):
             raise err
 
 
-def update_auth0_user(_, instance, **kwargs):
-    u_split = instance.username.split('-')
-    if len(split) < 2:
-        # Not a normal user (probably a non-interactive client)
+def update_auth0_user(sender, instance, **kwargs):
+    *store, user = instance.username.split('-')
+    if len(store) < 1:
+        logger.debug("got what seems to be a non-interactive client ID:", user)
         return
-    store, id_ = u_split
-    assert store == 'auth0', f'Auth0 user store "{store}" unsupported.'
-    id_ = store + '|' + id_
+    elif len(store) > 1:
+        logger.error("got user of unknown type!")
+    else:
+        # rebuild id
+        store = store[0]
+        user = f'{store}|{user}'
+        assert store == 'auth0', f'Auth0 user store "{store}" unsupported.'
     api = Auth0(settings.AUTH0_DOMAIN, T_MANAGER.get_token())
     patch = generate_auth0_user_patch_request(instance)
-    api.users.update(id_, patch)
+    api.users.update(user, patch)
