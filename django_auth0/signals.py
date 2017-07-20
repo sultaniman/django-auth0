@@ -41,8 +41,8 @@ def update_auth0_group(sender, instance, **kwargs):
 def update_auth0_groups(sender, instance, model, action, pk_set, **kwargs):
     """
     Update users's group membership in Auth0 when updated locally.
-    
-    DO NOT register this function if not using a user model that is wired to 
+
+    DO NOT register this function if not using a user model that is wired to
     Django's groups.
     """
     # TODO gut this filter logic and replace with kwargs on connector setup
@@ -94,8 +94,12 @@ def update_auth0_groups(sender, instance, model, action, pk_set, **kwargs):
             raise err
 
 
-def update_auth0_user(sender, instance, **kwargs):
-    store, id_ = instance.username.split('-')
+def update_auth0_user(_, instance, **kwargs):
+    u_split = instance.username.split('-')
+    if len(split) < 2:
+        # Not a normal user (probably a non-interactive client)
+        return
+    store, id_ = u_split
     assert store == 'auth0', f'Auth0 user store "{store}" unsupported.'
     id_ = store + '|' + id_
     api = Auth0(settings.AUTH0_DOMAIN, T_MANAGER.get_token())
