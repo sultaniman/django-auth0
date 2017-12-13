@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 import json
 import requests
+import logging
 
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from .utils import get_config
+
+logger = logging.getLogger(__name__)
 
 
 def process_login(request):
@@ -33,8 +36,10 @@ def process_login(request):
     url = 'https://%s/userinfo?access_token=%s'
     user_url = url % (config['AUTH0_DOMAIN'],
                       token_info.get('access_token', ''))
+    logger.info(user_url)
 
     user_info = requests.get(user_url).json()
+    logger.info(user_info)
 
     # We're saving all user information into the session
     request.session['profile'] = user_info
@@ -42,6 +47,9 @@ def process_login(request):
 
     if user:
         login(request, user)
+        logger.info(f'authenticated user: {user}')
         return redirect(config['AUTH0_SUCCESS_URL'])
+
+    logger.warning(f'no user found for request: {request}')
 
     return HttpResponse(status=400)
