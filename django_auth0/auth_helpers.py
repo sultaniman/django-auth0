@@ -38,7 +38,12 @@ def process_login(request):
                       token_info.get('access_token', ''))
     logger.info(user_url)
 
-    user_info = requests.get(user_url).json()
+    try:
+        user_info = requests.get(user_url).json()
+    except json.decoder.JSONDecodeError as e:
+        logger.warning(e)
+        return HttpResponse('invalid request (json decode error)', status=400)
+
     logger.info(user_info)
 
     # We're saving all user information into the session
