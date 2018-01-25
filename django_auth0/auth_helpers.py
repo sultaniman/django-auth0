@@ -35,6 +35,7 @@ def process_login(request):
                       token_info.get('access_token', ''))
 
     user_info = requests.get(user_url).json()
+    user_info['token_info'] = token_info.get('access_token', '')
 
     # We're saving all user information into the session
     request.session['profile'] = user_info
