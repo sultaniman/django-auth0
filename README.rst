@@ -1,6 +1,6 @@
-=============================
+============
 django-auth0
-=============================
+============
 
 .. image:: https://codecov.io/gh/imanhodjaev/django-auth0/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/imanhodjaev/django-auth0
@@ -15,6 +15,8 @@ django-auth0
 Django Auth0 authentication backend
 Backend implemented against Auth0 `Regular Python application`_
 
+
+Please use official tutorial and libraries from Auth0 https://auth0.com/docs/quickstart/webapp/django/01-login
 
 Quickstart
 ----------
