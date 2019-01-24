@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
-
+from .utils import AUTH0_FIELD_MAPPING, map_auth0_attrs_to_user
 
 UserModel = get_user_model()
 
@@ -41,10 +41,35 @@ class Auth0Backend(object):
         # The solution is to replace the pipe with a dash
         username = user_id.replace('|', '-')
 
+        # sentinel value for user modification or creation
+        modified = False
+
         try:
-            return UserModel.objects.get(username__iexact=username)
+            u = UserModel.objects.get(username__iexact=username)
         except UserModel.DoesNotExist:
-            return UserModel.objects.create(username=username)
+            u = UserModel(username=username)
+            u.set_unusable_password()
+            modified = True
+
+        modified = modified | map_auth0_attrs_to_user(u, **kwargs)
+
+        authorization = kwargs.get('authorization')
+        if authorization:
+            for role in authorization['roles']:
+                try:
+                    local_value = getattr(u, role)
+                    if type(local_value) != bool:
+                        raise NotImplementedError()
+                    if not local_value:
+                        setattr(u, role, True)
+                        modified = True
+                except Exception as err:
+                    print(err)
+
+        if modified:
+            u.save()
+
+        return u
 
     # noinspection PyProtectedMember
     def get_user(self, user_id):
